@@ -5,7 +5,7 @@
  */
 
 import javax.swing.*;
-
+import PollingSystem.LoginWindow;
 
 
 
@@ -13,6 +13,9 @@ public class main
 {
     public static void main(String[] args) 
     {
+        LoginWindow Info = new LoginWindow();
+        Info.setVisible(true);
+        
         JFrame f;
         f=new JFrame();
         JOptionPane.showMessageDialog(f," Hello: Welcome to the Poll Website \n ");

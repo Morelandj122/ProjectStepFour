@@ -6,7 +6,6 @@
 package PollingSystem;
 
 import javax.swing.JOptionPane;
-import PollingSystem.LoginWindow;
 
 /**
  *
@@ -219,14 +218,24 @@ public class UserRegistration extends javax.swing.JFrame {
             //password checks
             LoginWindow Info = new LoginWindow();
             dispose();
-            //need to dispose() of current frame or setVisible(false) here
             Info.setVisible(true);
         }
-        else {
+        else if (password.length() < 8){
             //error message
-            JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Invalid Login Details: Passwords need to be eight characters or more.", "Login Error", JOptionPane.ERROR_MESSAGE);
             jPassword.setText(null);
             jPasswordConfirm.setText(null);
+        }
+        else if (!password.equals(passwordconfirm)) {            
+            JOptionPane.showMessageDialog(null, "Invalid Login Details: Passwords do not match.", "Login Error", JOptionPane.ERROR_MESSAGE);
+            jPassword.setText(null);
+            jPasswordConfirm.setText(null);
+        }
+        else {           
+            JOptionPane.showMessageDialog(null, "Invalid Login Details: An Unknown Error Occured.", "Login Error", JOptionPane.ERROR_MESSAGE);
+            jPassword.setText(null);
+            jPasswordConfirm.setText(null);
+            
         }
         
     }//GEN-LAST:event_jButtonSubmitActionPerformed

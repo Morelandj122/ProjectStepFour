@@ -249,7 +249,10 @@ public class UserProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonHomePageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomePageActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
+        HomePage Info = new HomePage();
+        dispose();
+        Info.setVisible(true);
     }//GEN-LAST:event_jButtonHomePageActionPerformed
 
     private void jButtonSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSignOutActionPerformed

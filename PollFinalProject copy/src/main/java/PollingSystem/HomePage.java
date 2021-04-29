@@ -184,22 +184,37 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButtonCurrentGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCurrentGroupActionPerformed
         // TODO add your handling code here:
+        CurrentGroups Info = new CurrentGroups();
+        dispose();
+        Info.setVisible(true);       
     }//GEN-LAST:event_jButtonCurrentGroupActionPerformed
 
     private void jButtonNewGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewGroupActionPerformed
         // TODO add your handling code here:
+        CreateGroup Info = new CreateGroup();
+        dispose();
+        Info.setVisible(true);        
     }//GEN-LAST:event_jButtonNewGroupActionPerformed
 
     private void jButtonNewPollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewPollActionPerformed
         // TODO add your handling code here:
+        CreatePoll Info = new CreatePoll();
+        dispose();
+        Info.setVisible(true);        
     }//GEN-LAST:event_jButtonNewPollActionPerformed
 
     private void jButtonCurrentPollsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCurrentPollsActionPerformed
         // TODO add your handling code here:
+        CurrentPolls Info = new CurrentPolls();
+        dispose();
+        Info.setVisible(true);        
     }//GEN-LAST:event_jButtonCurrentPollsActionPerformed
 
     private void jButtonPollHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPollHistoryActionPerformed
         // TODO add your handling code here:
+        PollHistory Info = new PollHistory();
+        dispose();
+        Info.setVisible(true);       
     }//GEN-LAST:event_jButtonPollHistoryActionPerformed
 
     /**

@@ -207,6 +207,8 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
         CurrentPolls Info = new CurrentPolls();
         dispose();
+//this is a demo comment
+//this is a second demo
         Info.setVisible(true);        
     }//GEN-LAST:event_jButtonCurrentPollsActionPerformed
 

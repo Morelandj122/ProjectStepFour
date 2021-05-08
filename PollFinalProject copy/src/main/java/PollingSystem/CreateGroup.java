@@ -9,13 +9,32 @@ package PollingSystem;
  *
  * @author KenweiVI
  */
-public class CreateGroup extends javax.swing.JFrame {
+import java.awt.Color;
+import javax.swing.*;
+import javax.swing.event.*;
 
+
+public class CreateGroup extends javax.swing.JFrame implements CaretListener {
+
+    
+    JPanel jPanelGroupInfo;
     /**
      * Creates new form CreateGroups
      */
     public CreateGroup() {
         initComponents();
+        jPanelGroupInfo = new JPanel();
+        
+        setLayout(null);
+        jPanelGroupInfo.setBounds(200, 300, 1000, 800);
+        jPanelGroupInfo.setOpaque(true);
+        
+        //uncomment to see dynamically created jpanel area
+        //jPanelGroupInfo.setBackground(Color.CYAN);
+        
+        jTextFieldGroupSize.addCaretListener(this);
+        
+        add(jPanelGroupInfo);
     }
 
     /**
@@ -30,15 +49,18 @@ public class CreateGroup extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButtonHomePage = new javax.swing.JButton();
         jButtonSignOut = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldGroupSize = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jPanelINeedThisHereCuz = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         jButtonHomePage.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButtonHomePage.setText("Hope Page");
+        jButtonHomePage.setText("Home Page");
         jButtonHomePage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonHomePageActionPerformed(evt);
@@ -53,15 +75,53 @@ public class CreateGroup extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setText("Group Size:");
+
+        jTextFieldGroupSize.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextFieldGroupSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldGroupSizeActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setText("(Max 20)");
+
+        javax.swing.GroupLayout jPanelINeedThisHereCuzLayout = new javax.swing.GroupLayout(jPanelINeedThisHereCuz);
+        jPanelINeedThisHereCuz.setLayout(jPanelINeedThisHereCuzLayout);
+        jPanelINeedThisHereCuzLayout.setHorizontalGroup(
+            jPanelINeedThisHereCuzLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanelINeedThisHereCuzLayout.setVerticalGroup(
+            jPanelINeedThisHereCuzLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(940, Short.MAX_VALUE)
-                .addComponent(jButtonHomePage)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonSignOut)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(938, Short.MAX_VALUE)
+                        .addComponent(jButtonHomePage)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonSignOut))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(274, 274, 274)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldGroupSize, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel3))
+                            .addComponent(jPanelINeedThisHereCuz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -71,7 +131,16 @@ public class CreateGroup extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSignOut)
                     .addComponent(jButtonHomePage))
-                .addGap(0, 617, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3))
+                    .addComponent(jTextFieldGroupSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jPanelINeedThisHereCuz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 395, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -102,7 +171,7 @@ public class CreateGroup extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jButtonHomePageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomePageActionPerformed
         // TODO add your handling code here:
         HomePage Info = new HomePage();
@@ -116,6 +185,10 @@ public class CreateGroup extends javax.swing.JFrame {
         dispose();
         Info.setVisible(true);
     }//GEN-LAST:event_jButtonSignOutActionPerformed
+
+    private void jTextFieldGroupSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldGroupSizeActionPerformed
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_jTextFieldGroupSizeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,6 +230,54 @@ public class CreateGroup extends javax.swing.JFrame {
     private javax.swing.JButton jButtonHomePage;
     private javax.swing.JButton jButtonSignOut;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelINeedThisHereCuz;
+    private javax.swing.JTextField jTextFieldGroupSize;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void caretUpdate(CaretEvent e) {
+        String groupSize = jTextFieldGroupSize.getText();
+        
+        jPanelGroupInfo.removeAll();
+        
+        if(!groupSize.equals("")) {
+            int groupSizeInt = Integer.parseInt(groupSize);
+            
+            if (groupSizeInt <= 20 ) {                
+                JLabel jlabelGroupName = new JLabel();
+                JTextField jtextfieldGroupName = new JTextField();
+                JLabel jlabels[] = new JLabel[groupSizeInt];                 
+                JTextField jtextfields[] = new JTextField[groupSizeInt];
+                
+                
+                jlabelGroupName.setText("Group Name: ");
+                jlabelGroupName.setFont(new java.awt.Font("Tahoma", 1, 24));
+                jlabelGroupName.setPreferredSize(new java.awt.Dimension(400, 40));
+                jlabelGroupName.setHorizontalAlignment(JLabel.RIGHT);
+                jPanelGroupInfo.add(jlabelGroupName);
+                
+                
+                jtextfieldGroupName.setFont(new java.awt.Font("Tahoma", 1, 24));
+                jtextfieldGroupName.setPreferredSize(new java.awt.Dimension(400, 40));
+                jPanelGroupInfo.add(jtextfieldGroupName);
+                for (int i = 0; i < jlabels.length; i++) {
+                    jlabels[i] = new JLabel("Student" + i);
+                    jlabels[i].setText("Student " + (i+1) + " ID#: ");
+                    jlabels[i].setFont(new java.awt.Font("Tahoma", 1, 24));
+                    jlabels[i].setPreferredSize(new java.awt.Dimension(200, 40));
+                    jPanelGroupInfo.add(jlabels[i]);
+                    
+                    jtextfields[i] = new JTextField("SID:" + i);
+                    jtextfields[i].setFont(new java.awt.Font("Tahoma", 1, 24));
+                    jtextfields[i].setPreferredSize(new java.awt.Dimension(200, 40));
+                    jPanelGroupInfo.add(jtextfields[i]);
+                }
+            }
+        }          
+        jPanelGroupInfo.validate();
+        jPanelGroupInfo.repaint();
+    }
 }

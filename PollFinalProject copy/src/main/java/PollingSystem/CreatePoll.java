@@ -4,18 +4,34 @@
  * and open the template in the editor.
  */
 package PollingSystem;
+import java.awt.Color;
+import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  *
  * @author KenweiVI
  */
-public class CreatePoll extends javax.swing.JFrame {
-
+public class CreatePoll extends javax.swing.JFrame implements CaretListener {
+    
+    JPanel jPanelPollInfo;
     /**
      * Creates new form CreatePoll
      */
     public CreatePoll() {
         initComponents();
+        jPanelPollInfo = new JPanel();
+        
+        setLayout(null);
+        jPanelPollInfo.setBounds(200, 300, 1000, 800);
+        jPanelPollInfo.setOpaque(true);
+        
+        //uncomment to see dynamically created jpanel area
+        //jPanelPollInfo.setBackground(Color.CYAN);
+        
+        jTextFieldPollSize.addCaretListener(this);
+        
+        add(jPanelPollInfo);
     }
 
     /**
@@ -30,15 +46,17 @@ public class CreatePoll extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jButtonHomePage2 = new javax.swing.JButton();
         jButtonSignOut = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldPollSize = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel3.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         jButtonHomePage2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButtonHomePage2.setText("Hope Page");
+        jButtonHomePage2.setText("Home Page");
         jButtonHomePage2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonHomePage2ActionPerformed(evt);
@@ -53,16 +71,37 @@ public class CreatePoll extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setText("Poll Size:");
+
+        jTextFieldPollSize.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextFieldPollSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPollSizeActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setText("(Max 10)");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(940, Short.MAX_VALUE)
+                .addContainerGap(938, Short.MAX_VALUE)
                 .addComponent(jButtonHomePage2)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSignOut)
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(274, 274, 274)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldPollSize, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,7 +110,13 @@ public class CreatePoll extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSignOut)
                     .addComponent(jButtonHomePage2))
-                .addGap(0, 617, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextFieldPollSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(0, 535, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -117,6 +162,10 @@ public class CreatePoll extends javax.swing.JFrame {
         Info.setVisible(true);
     }//GEN-LAST:event_jButtonSignOutActionPerformed
 
+    private void jTextFieldPollSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPollSizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPollSizeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -153,13 +202,80 @@ public class CreatePoll extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonHomePage;
-    private javax.swing.JButton jButtonHomePage1;
     private javax.swing.JButton jButtonHomePage2;
     private javax.swing.JButton jButtonSignOut;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField jTextFieldPollSize;
     // End of variables declaration//GEN-END:variables
+
+
+    @Override
+    public void caretUpdate(CaretEvent e) {
+        String pollSize = jTextFieldPollSize.getText();
+        
+        jPanelPollInfo.removeAll();
+        
+        if(!pollSize.equals("")) {
+            int pollSizeInt = Integer.parseInt(pollSize);
+            int answers = 0;                    
+            
+            if (pollSizeInt <= 10 ) {                
+                JLabel jlabelPollName = new JLabel();
+                JTextField jtextfieldPollName = new JTextField();
+                               
+                
+                JLabel jlabels[] = new JLabel[pollSizeInt];
+                JTextField jtextfields[] = new JTextField[pollSizeInt];
+                
+                
+                JLabel jlabelanswers[] = new JLabel[pollSizeInt];
+                JTextField jtextfieldanswers[] = new JTextField[pollSizeInt];
+                
+                
+                jlabelPollName.setText("Poll Name: ");
+                jlabelPollName.setFont(new java.awt.Font("Tahoma", 1, 24));
+                jlabelPollName.setPreferredSize(new java.awt.Dimension(400, 40));
+                jlabelPollName.setHorizontalAlignment(JLabel.RIGHT);
+                jPanelPollInfo.add(jlabelPollName);
+                
+                
+                jtextfieldPollName.setFont(new java.awt.Font("Tahoma", 1, 24));
+                jtextfieldPollName.setPreferredSize(new java.awt.Dimension(400, 40));
+                jPanelPollInfo.add(jtextfieldPollName);
+                for (int i = 0; i < jlabels.length; i++) {
+                    jlabels[i] = new JLabel("Q" + i);
+                    jlabels[i].setText("Question " + (i+1) + ": ");
+                    jlabels[i].setFont(new java.awt.Font("Tahoma", 1, 24));
+                    jlabels[i].setPreferredSize(new java.awt.Dimension(200, 40));
+                    jPanelPollInfo.add(jlabels[i]);
+                    
+                    jtextfields[i] = new JTextField();
+                    jtextfields[i].setFont(new java.awt.Font("Tahoma", 1, 24));
+                    jtextfields[i].setPreferredSize(new java.awt.Dimension(200, 40));
+                    jPanelPollInfo.add(jtextfields[i]);
+                    
+                    jlabelanswers[i] = new JLabel("Q" + i);
+                    jlabelanswers[i].setText("Q" + (i+1) + " Answer #: ");
+                    jlabelanswers[i].setFont(new java.awt.Font("Tahoma", 1, 24));
+                    jlabelanswers[i].setPreferredSize(new java.awt.Dimension(200, 40));
+                    jPanelPollInfo.add(jlabelanswers[i]);
+                    
+                    jtextfieldanswers[i] = new JTextField();
+                    jtextfieldanswers[i].setFont(new java.awt.Font("Tahoma", 1, 24));
+                    jtextfieldanswers[i].setPreferredSize(new java.awt.Dimension(200, 40));
+                    jPanelPollInfo.add(jtextfieldanswers[i]);
+                    
+                    //WIP
+                    //jtextfieldanswers[i].addCaretListener(this);
+                    
+                    
+                }
+            }
+        }          
+        jPanelPollInfo.validate();
+        jPanelPollInfo.repaint();
+    }
 }

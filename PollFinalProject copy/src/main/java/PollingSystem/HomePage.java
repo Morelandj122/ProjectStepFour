@@ -5,6 +5,9 @@
  */
 package PollingSystem;
 
+import java.io.*;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +20,31 @@ public class HomePage extends javax.swing.JFrame {
      */
     public HomePage() {
         initComponents();
+        try {
+            Scanner input2 = new Scanner(new File("userLogin.txt"));
+            Scanner input = new Scanner(new File("UHD_DB.txt"));            
+            String employeeID = input2.nextLine();
+            String userLastName = "userLastName";
+            
+            while (input.hasNextLine()) {
+                String t = input.nextLine();
+                String[] DB_array = t.split(";");
+
+                if (employeeID.equals(DB_array[0])) {
+                    userLastName = DB_array[3];
+                    break;
+                }
+            }
+            
+            jLabelTitle.setText("Welcome to UHD Polling " + userLastName + "!");
+            input2.close();
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -36,7 +64,7 @@ public class HomePage extends javax.swing.JFrame {
         jButtonNewPoll = new javax.swing.JButton();
         jButtonCurrentPolls = new javax.swing.JButton();
         jButtonCurrentGroup = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -139,8 +167,8 @@ public class HomePage extends javax.swing.JFrame {
                 .addGap(0, 316, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("Welcome to UHD Polling userName");
+        jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabelTitle.setText("Welcome to UHD Polling userName");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,14 +180,14 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(321, 321, 321)
-                .addComponent(jLabel1)
+                .addComponent(jLabelTitle)
                 .addContainerGap(322, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(56, 56, 56)
-                .addComponent(jLabel1)
+                .addComponent(jLabelTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
                 .addContainerGap())
@@ -186,35 +214,35 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
         CurrentGroups Info = new CurrentGroups();
         dispose();
-        Info.setVisible(true);       
+        Info.setVisible(true);
     }//GEN-LAST:event_jButtonCurrentGroupActionPerformed
 
     private void jButtonNewGroupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewGroupActionPerformed
         // TODO add your handling code here:
         CreateGroup Info = new CreateGroup();
         dispose();
-        Info.setVisible(true);        
+        Info.setVisible(true);
     }//GEN-LAST:event_jButtonNewGroupActionPerformed
 
     private void jButtonNewPollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewPollActionPerformed
         // TODO add your handling code here:
         CreatePoll Info = new CreatePoll();
         dispose();
-        Info.setVisible(true);        
+        Info.setVisible(true);
     }//GEN-LAST:event_jButtonNewPollActionPerformed
 
     private void jButtonCurrentPollsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCurrentPollsActionPerformed
         // TODO add your handling code here:
         CurrentPolls Info = new CurrentPolls();
         dispose();
-        Info.setVisible(true);        
+        Info.setVisible(true);
     }//GEN-LAST:event_jButtonCurrentPollsActionPerformed
 
     private void jButtonPollHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPollHistoryActionPerformed
         // TODO add your handling code here:
         PollHistory Info = new PollHistory();
         dispose();
-        Info.setVisible(true);       
+        Info.setVisible(true);
     }//GEN-LAST:event_jButtonPollHistoryActionPerformed
 
     /**
@@ -260,7 +288,7 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPollHistory;
     private javax.swing.JButton jButtonProfile;
     private javax.swing.JButton jButtonSignOut;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTitle;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

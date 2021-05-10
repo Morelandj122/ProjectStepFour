@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package PollingSystem;
 
+import java.io.*;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -176,21 +176,56 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
-        String password = jPasswordField1.getText();
-        String username = jTextFieldUserName.getText();
-        
-        if (password.equals("test") && username.equals("test")) {
-            jPasswordField1.setText(null);
-            jTextFieldUserName.setText(null);
-            HomePage Info = new HomePage();
-            dispose();
-            Info.setVisible(true);
+
+        String passwordInput = jPasswordField1.getText();
+        String userNameInput = jTextFieldUserName.getText();
+        int fail = 1;
+
+        try {
+            FileWriter input2 = new FileWriter("userLogin.txt", false);
+            BufferedWriter input3 = new BufferedWriter(input2);
+            Scanner input = new Scanner(new File("UHD_DB.txt"));
+
+            while (input.hasNextLine()) {
+                String t = input.nextLine();
+                String[] DB_array = t.split(";");
+
+                if (userNameInput.equals(DB_array[1]) && passwordInput.equals(DB_array[2])) {
+                    fail = 1;
+                    JOptionPane.showMessageDialog(null,
+                            "Credentials Accepted", "Access Granted",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    input3.write(DB_array[0]);
+                    input3.flush();
+                    input3.close();
+                    HomePage Info = new HomePage();
+                    dispose();
+                    Info.setVisible(true);
+                    break;
+                } else {
+                    fail = 0;
+                }
+            }
+
+            if (fail == 0) {
+                JOptionPane.showMessageDialog(null,
+                        "Ivalid username and/or password.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+
+            }
+            input2.close();
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-        else {                       
-            JOptionPane.showMessageDialog(null, "Invalid Login Details.", "Login Error", JOptionPane.ERROR_MESSAGE);
-            jPasswordField1.setText(null);
-            jTextFieldUserName.setText(null);
-        }
+
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed

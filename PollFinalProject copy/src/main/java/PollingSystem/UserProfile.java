@@ -5,7 +5,7 @@
  */
 package PollingSystem;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -15,7 +15,7 @@ public class UserProfile extends javax.swing.JFrame {
 
     /**
      * Creates new form UserProfile
-     */
+     */    
     public UserProfile() {
         initComponents();
         jPanelPasswordReset.setVisible(false);
@@ -50,7 +50,6 @@ public class UserProfile extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         jButtonHomePage.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -216,11 +215,11 @@ public class UserProfile extends javax.swing.JFrame {
                 .addComponent(jButtonChangePassword)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelPasswordReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 208, Short.MAX_VALUE))
+                .addGap(0, 214, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("Welcome to Your Profile userName");
+        jLabel1.setText("Welcome to Your Profile userName!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,7 +232,7 @@ public class UserProfile extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(321, 321, 321)
                 .addComponent(jLabel1)
-                .addContainerGap(325, Short.MAX_VALUE))
+                .addContainerGap(313, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -5,6 +5,8 @@
  */
 package PollingSystem;
 
+import java.io.*;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,6 +44,8 @@ public class UserRegistration extends javax.swing.JFrame {
         jButtonQuit = new javax.swing.JButton();
         jPassword = new javax.swing.JPasswordField();
         jPasswordConfirm = new javax.swing.JPasswordField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextEmployeeID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,7 +84,7 @@ public class UserRegistration extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel5.setText("New Password:");
+        jLabel5.setText("Password:");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setText("Confirm Password:");
@@ -105,6 +109,16 @@ public class UserRegistration extends javax.swing.JFrame {
 
         jPasswordConfirm.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel7.setText("Employee ID:");
+
+        jTextEmployeeID.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextEmployeeID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextEmployeeIDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -122,20 +136,29 @@ public class UserRegistration extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextUserName)
                             .addComponent(jTextLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                             .addComponent(jTextFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                             .addComponent(jPassword)
-                            .addComponent(jPasswordConfirm))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPasswordConfirm)
+                            .addComponent(jTextEmployeeID, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(410, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jTextEmployeeID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -208,42 +231,88 @@ public class UserRegistration extends javax.swing.JFrame {
 
     private void jButtonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSubmitActionPerformed
         // TODO add your handling code here:
-        String username = jTextUserName.getText();
-        String firstname = jTextFirstName.getText();
-        String lastname = jTextLastName.getText();
-        String password = jPassword.getText();
-        String passwordconfirm = jPasswordConfirm.getText();
-        
-        if (password.equals(passwordconfirm) && password.length() >= 8) {
-            //password checks
-            LoginWindow Info = new LoginWindow();
-            dispose();
-            Info.setVisible(true);
+
+        String employeeID = jTextEmployeeID.getText();
+        String userNameInput = jTextUserName.getText();
+        String lastNameInput = jTextLastName.getText();
+        String passwordInput = jPassword.getText();
+        String passwordInputConfirm = jPasswordConfirm.getText();
+
+        int fail = 1;
+        try {
+            FileWriter input2 = new FileWriter("UHD_DB.txt", true);
+            BufferedWriter input3 = new BufferedWriter(input2);
+            Scanner input = new Scanner(new File("UHD_DB.txt"));
+            while (input.hasNextLine() && passwordInput.equals(passwordInputConfirm) && passwordInput.length() >= 8) {
+                String t = input.nextLine();
+                String[] DB_array = t.split(";");
+
+                System.out.println(DB_array[0]);
+
+                if (employeeID.equals(DB_array[0])) {
+                    fail = 0;
+
+                    JOptionPane.showMessageDialog(null,
+                            "Employee ID Already Exists.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                    break;
+                } else {
+                    fail = 1;
+                }
+            }
+
+            if (fail == 1) {
+                JOptionPane.showMessageDialog(null,
+                        "Credentials Accepted", "Account Created",
+                        JOptionPane.INFORMATION_MESSAGE);
+                input3.newLine();
+                input3.write(employeeID + ";" + userNameInput + ";" + passwordInput + ";" + lastNameInput + ";");
+
+                LoginWindow Info = new LoginWindow();
+                dispose();
+                Info.setVisible(true);
+            }
+
+            input3.flush();
+            input3.close();
+            input2.close();
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-        else if (password.length() < 8){
+
+        if (passwordInput.equals(passwordInputConfirm) && passwordInput.length() >= 8) {
+            //password checks
+        } else if (passwordInput.length() < 8) {
             //error message
             JOptionPane.showMessageDialog(null, "Invalid Login Details: Passwords need to be eight characters or more.", "Login Error", JOptionPane.ERROR_MESSAGE);
             jPassword.setText(null);
             jPasswordConfirm.setText(null);
-        }
-        else if (!password.equals(passwordconfirm)) {            
+        } else if (!passwordInput.equals(passwordInputConfirm)) {
             JOptionPane.showMessageDialog(null, "Invalid Login Details: Passwords do not match.", "Login Error", JOptionPane.ERROR_MESSAGE);
             jPassword.setText(null);
             jPasswordConfirm.setText(null);
         }
-        else {           
-            JOptionPane.showMessageDialog(null, "Invalid Login Details: An Unknown Error Occured.", "Login Error", JOptionPane.ERROR_MESSAGE);
-            jPassword.setText(null);
-            jPasswordConfirm.setText(null);
-            
-        }
-        
+
+
     }//GEN-LAST:event_jButtonSubmitActionPerformed
 
     private void jButtonQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jButtonQuitActionPerformed
+
+    private void jTextEmployeeIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEmployeeIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextEmployeeIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,9 +358,11 @@ public class UserRegistration extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JPasswordField jPasswordConfirm;
+    private javax.swing.JTextField jTextEmployeeID;
     private javax.swing.JTextField jTextFirstName;
     private javax.swing.JTextField jTextLastName;
     private javax.swing.JTextField jTextUserName;

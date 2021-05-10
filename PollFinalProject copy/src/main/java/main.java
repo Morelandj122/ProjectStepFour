@@ -18,8 +18,8 @@ public class main
         
         JFrame f;
         f=new JFrame();
-        JOptionPane.showMessageDialog(f," Hello: Welcome to the Poll Website \n ");
-        JOptionPane.showInputDialog(f," 1) Create Poll \n 2) Check Poll Results \n 3) Send Emergency Message ");
+        //JOptionPane.showMessageDialog(f," Hello: Welcome to the Poll Website \n ");
+        //JOptionPane.showInputDialog(f," 1) Create Poll \n 2) Check Poll Results \n 3) Send Emergency Message ");
         
     }
     

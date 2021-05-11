@@ -230,7 +230,8 @@ public class HomePage extends javax.swing.JFrame {
         dispose();
         Info.setVisible(true);
     }//GEN-LAST:event_jButtonNewPollActionPerformed
-
+//this is saumik's demo attempt
+//i am wondering if this is working
     private void jButtonCurrentPollsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCurrentPollsActionPerformed
         // TODO add your handling code here:
         CurrentPolls Info = new CurrentPolls();

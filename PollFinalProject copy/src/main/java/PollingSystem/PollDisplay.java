@@ -5,17 +5,65 @@
  */
 package PollingSystem;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author KenweiVI
  */
-public class PollDisplay extends javax.swing.JFrame {
+public class PollDisplay extends javax.swing.JFrame implements ActionListener {
+
+    JPanel jPanelPollInfo;
+    ArrayList<JComponent> jComponentList = new ArrayList<>();
+    int studentAnswers[] = new int[10];
 
     /**
      * Creates new form PollDisplay
      */
     public PollDisplay() {
         initComponents();
+        jPanelPollInfo = new JPanel();
+
+        setLayout(null);
+        jPanelPollInfo.setBounds(200, 200, 1000, 800);
+        jPanelPollInfo.setOpaque(true);
+        //jPanelPollInfo.setBackground(Color.CYAN);
+
+        add(jPanelPollInfo);
+
+        try {
+            Scanner input = new Scanner(new File("studentLogin.txt"));
+            String pollName = "pollName";
+
+            if (input.hasNextLine()) {
+                pollName = input.nextLine();
+            }
+
+            jLabelTitle.setText("Welcome to Poll " + pollName + "!");
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -29,7 +77,9 @@ public class PollDisplay extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButtonSignOut = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabelTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,12 +94,32 @@ public class PollDisplay extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton1.setText("Generate");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jButton2.setText("Submit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(206, 206, 206)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonSignOut)
                 .addContainerGap())
         );
@@ -57,12 +127,15 @@ public class PollDisplay extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonSignOut)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSignOut)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(0, 617, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("Welcome to Poll pollID");
+        jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabelTitle.setText("Welcome to Poll pollID");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,15 +146,15 @@ public class PollDisplay extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(321, 321, 321)
-                .addComponent(jLabel1)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addGap(221, 221, 221)
+                .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 901, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(56, 56, 56)
-                .addComponent(jLabel1)
+                .addComponent(jLabelTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
                 .addContainerGap())
@@ -96,6 +169,191 @@ public class PollDisplay extends javax.swing.JFrame {
         dispose();
         Info.setVisible(true);
     }//GEN-LAST:event_jButtonSignOutActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jPanelPollInfo.removeAll();
+
+        try {
+            Scanner input2 = new Scanner(new File("studentLogin.txt"));
+            Scanner input = new Scanner(new File("polls.txt"));
+            String pollName = input2.nextLine();
+            String[] yesNoStrings = {"Yes", "No"};
+
+            while (input.hasNextLine()) {
+                String t = input.nextLine();
+                String[] DB_array = t.split(";");
+                int j = 1;
+                String result;
+
+                if (pollName.equals(DB_array[0])) {
+
+                    for (int i = 3; i < DB_array.length; i += 2) {
+                        //print "Group i" label
+                        JLabel label1 = new JLabel();
+                        label1.setText("Question " + j + ": ");
+                        label1.setFont(new java.awt.Font("Tahoma", 1, 24));
+                        label1.setPreferredSize(new java.awt.Dimension(200, 40));
+                        label1.setHorizontalAlignment(JLabel.RIGHT);
+                        jPanelPollInfo.add(label1);
+                        //print groupName label
+                        JLabel question = new JLabel();
+                        question.setText(DB_array[i]);
+                        question.setFont(new java.awt.Font("Tahoma", 1, 24));
+                        question.setPreferredSize(new java.awt.Dimension(200, 40));
+                        jPanelPollInfo.add(question);
+
+                        if (DB_array.length <= i + 1) {
+                            JLabel label2 = new JLabel();
+                            label2.setText("Your Q" + j + " Answer: ");
+                            label2.setFont(new java.awt.Font("Tahoma", 1, 24));
+                            label2.setPreferredSize(new java.awt.Dimension(210, 40));
+                            label2.setHorizontalAlignment(JLabel.RIGHT);
+                            jPanelPollInfo.add(label2);
+
+                            JComboBox yesNo = new JComboBox(yesNoStrings);
+                            yesNo.setSelectedIndex(1);
+                            yesNo.addActionListener(this);
+                            yesNo.setFont(new java.awt.Font("Tahoma", 1, 24));
+                            yesNo.setPreferredSize(new java.awt.Dimension(200, 40));
+                            yesNo.setName("yesNo" + j);
+                            jPanelPollInfo.add(yesNo);
+                            jComponentList.add(yesNo);
+                            break;
+                        } else if (DB_array[i + 1].equals("1")) {
+                            result = "true";
+                        } else {
+                            result = "false";
+                        }
+
+                        JLabel label2 = new JLabel();
+                        label2.setText("Your Q" + j + " Answer: ");
+                        label2.setFont(new java.awt.Font("Tahoma", 1, 24));
+                        label2.setPreferredSize(new java.awt.Dimension(210, 40));
+                        label2.setHorizontalAlignment(JLabel.RIGHT);
+                        jPanelPollInfo.add(label2);
+
+                        JComboBox yesNo = new JComboBox(yesNoStrings);
+                        yesNo.setSelectedIndex(1);
+                        yesNo.addActionListener(this);
+                        yesNo.setFont(new java.awt.Font("Tahoma", 1, 24));
+                        yesNo.setPreferredSize(new java.awt.Dimension(200, 40));
+                        yesNo.setName("yesNo" + j);
+                        jPanelPollInfo.add(yesNo);
+                        jComponentList.add(yesNo);
+                        j++;
+                    }
+                }
+            }
+            jPanelPollInfo.validate();
+            jPanelPollInfo.repaint();
+
+            input2.close();
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+//        System.out.println("jComponentList.size is " + jComponentList.size());
+//        System.out.println("studentAnswers.length is " + studentAnswers.length);
+//
+//        for (int i = 0; i < jComponentList.size(); i++) {
+//            System.out.println("studentAnswer" + i + " " + studentAnswers[i]);
+//        }
+        if (jComponentList.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Invalid Submit: Generate questions before submitting.", "Error",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+
+            try {
+                FileWriter input2 = new FileWriter("pollHistoryTemp.txt", false);
+                BufferedWriter input3 = new BufferedWriter(input2);
+                Scanner input = new Scanner(new File("studentLogin.txt"));
+                Scanner input4 = new Scanner(new File("pollHistory.txt"));
+                String pollName = input.nextLine();
+                int g = 0;
+
+                while (input4.hasNextLine()) {
+                    String t = input4.nextLine();
+                    String[] DB_array = t.split(";");
+
+                    //System.out.println(DB_array[0]);
+                    if (pollName.equals(DB_array[0])) {
+                        //here is where I print all the stuffs
+                        input3.write(DB_array[0] + ";" + DB_array[1] + ";" + DB_array[2] + ";");
+                        for (int i = 3; i < DB_array.length; i += 2) {
+                            input3.write(DB_array[i] + ";" + studentAnswers[g] + ";");
+                            g++;
+                        }
+                        input3.newLine();
+                    } else {
+                        input3.write(t);
+                        input3.newLine();
+                    }
+                }
+                input3.flush();
+                input4.close();
+                input3.close();
+                input2.close();
+                input.close();
+
+                FileWriter input5 = new FileWriter("pollHistory.txt", false);
+                BufferedWriter input6 = new BufferedWriter(input5);
+                Scanner input7 = new Scanner(new File("pollHistoryTemp.txt"));
+                while (input7.hasNextLine()) {
+                    String t = input7.nextLine();
+                    input6.write(t);
+                    input6.newLine();
+
+                }
+                input6.flush();
+                input7.close();
+                input6.close();
+                input5.close();
+                
+                StudentPortal Info = new StudentPortal();
+                dispose();
+                Info.setVisible(true);
+            } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(null,
+                        "University DB Not Found", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        JComboBox cb = (JComboBox) e.getSource();
+        String studentResult = (String) cb.getSelectedItem();
+//        String thisname;
+//        String testname;
+        for (int i = 1; i < jComponentList.size() + 1; i++) {
+//            testname = "yesNo" + i;
+//            thisname = (String) cb.getName();
+//            System.out.println("box name is set to " + thisname);
+//            System.out.println("box name is set to " + testname);
+
+            if (cb.getName().equals("yesNo" + i)) {
+                if (studentResult.equals("Yes")) {
+                    studentAnswers[i - 1] = 1;
+                } else {
+                    studentAnswers[i - 1] = 0;
+                }
+            }
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -133,8 +391,10 @@ public class PollDisplay extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonSignOut;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTitle;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

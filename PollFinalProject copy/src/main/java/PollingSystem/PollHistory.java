@@ -83,6 +83,7 @@ public class PollHistory extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         jButtonHomePage.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -150,15 +151,16 @@ public class PollHistory extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSignOut)
-                    .addComponent(jButtonHomePage)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jButton1)
                         .addComponent(jTextFieldAddHistory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2)))
-                .addGap(0, 623, Short.MAX_VALUE))
+                        .addComponent(jButton2))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonSignOut)
+                        .addComponent(jButtonHomePage)))
+                .addGap(0, 617, Short.MAX_VALUE))
         );
 
         jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -282,11 +284,12 @@ public class PollHistory extends javax.swing.JFrame {
                         fail = 0;
 
                         input3.newLine();
-                        for (int i = 0; i < DB_array.length; i++) {
-                            input3.write(DB_array[i] + ";");
-                        }
-                        //need to delete line from polls.txt here
+                        input3.write(t);
+                        input3.flush();
 
+//                        for (int i = 0; i < DB_array.length; i++) {
+//                            input3.write(DB_array[i] + ";");
+//                        }
                         break;
 
                     } else {
@@ -303,13 +306,47 @@ public class PollHistory extends javax.swing.JFrame {
                         "Invalid Request: Poll was not found.", "Error",
                         JOptionPane.INFORMATION_MESSAGE);
 
-            }
+                input4.close();
+                input3.close();
+                input2.close();
+                input.close();
+            } else {
 
-            input4.close();
-            input3.flush();
-            input3.close();
-            input2.close();
-            input.close();
+                FileWriter input20 = new FileWriter("pollHistoryTemp.txt", false);
+                BufferedWriter input30 = new BufferedWriter(input20);
+                Scanner input40 = new Scanner(new File("polls.txt"));
+                int g = 0;
+
+                while (input40.hasNextLine()) {
+                    String t = input40.nextLine();
+                    String[] DB_array = t.split(";");
+
+                    //System.out.println(DB_array[0]);
+                    if (addHistoryPoll.equals(DB_array[0])) {
+
+                    } else {
+                        input30.write(t);
+                        input30.newLine();
+                    }
+                }
+                input30.flush();
+                input40.close();
+                input30.close();
+                input20.close();
+
+                FileWriter input5 = new FileWriter("polls.txt", false);
+                BufferedWriter input6 = new BufferedWriter(input5);
+                Scanner input7 = new Scanner(new File("pollHistoryTemp.txt"));
+                while (input7.hasNextLine()) {
+                    String t = input7.nextLine();
+                    input6.write(t);
+                    input6.newLine();
+
+                }
+                input7.close();
+                input6.close();
+                input5.close();
+            }
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null,
                     "University DB Not Found", "Error",

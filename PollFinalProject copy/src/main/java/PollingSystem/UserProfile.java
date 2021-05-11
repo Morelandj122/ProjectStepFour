@@ -5,6 +5,14 @@
  */
 package PollingSystem;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -19,6 +27,33 @@ public class UserProfile extends javax.swing.JFrame {
     public UserProfile() {
         initComponents();
         jPanelPasswordReset.setVisible(false);
+        
+        try {
+            Scanner input2 = new Scanner(new File("userLogin.txt"));
+            Scanner input = new Scanner(new File("UHD_DB.txt"));
+            String employeeID = input2.nextLine();
+            String userLastName = "userLastName";
+
+            while (input.hasNextLine()) {
+                String t = input.nextLine();
+                String[] DB_array = t.split(";");
+
+                if (employeeID.equals(DB_array[0])) {
+                    userLastName = DB_array[3];
+                    break;
+                }
+            }
+
+            jLabelTitle.setText("Welcome to Your Profile " + userLastName + "!");
+            jLabelEmployeeID.setText(employeeID);
+            input2.close();
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -34,9 +69,7 @@ public class UserProfile extends javax.swing.JFrame {
         jButtonHomePage = new javax.swing.JButton();
         jButtonSignOut = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabelTotalPolls = new javax.swing.JLabel();
-        jLabelUserName = new javax.swing.JLabel();
+        jLabelEmployeeID = new javax.swing.JLabel();
         jButtonChangePassword = new javax.swing.JButton();
         jPanelPasswordReset = new javax.swing.JPanel();
         jTextCurrentPassword = new javax.swing.JTextField();
@@ -46,10 +79,11 @@ public class UserProfile extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jButtonPasswordSubmit = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         jButtonHomePage.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -69,14 +103,9 @@ public class UserProfile extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Username:");
+        jLabel2.setText("Employee ID:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setText("Total Polls:");
-
-        jLabelTotalPolls.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-
-        jLabelUserName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabelEmployeeID.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         jButtonChangePassword.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jButtonChangePassword.setText("Change Password");
@@ -184,16 +213,12 @@ public class UserProfile extends javax.swing.JFrame {
                         .addGap(353, 353, 353)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
+                                .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelTotalPolls, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabelEmployeeID, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButtonChangePassword)
                             .addComponent(jPanelPasswordReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 357, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -206,20 +231,16 @@ public class UserProfile extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabelUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabelTotalPolls, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabelEmployeeID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
                 .addComponent(jButtonChangePassword)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelPasswordReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 214, Short.MAX_VALUE))
+                .addGap(0, 208, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("Welcome to Your Profile userName!");
+        jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabelTitle.setText("Welcome to Your Profile userName!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -231,14 +252,14 @@ public class UserProfile extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(321, 321, 321)
-                .addComponent(jLabel1)
+                .addComponent(jLabelTitle)
                 .addContainerGap(313, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(56, 56, 56)
-                .addComponent(jLabel1)
+                .addComponent(jLabelTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
                 .addContainerGap())
@@ -287,32 +308,110 @@ public class UserProfile extends javax.swing.JFrame {
         String currentPassword = jTextCurrentPassword.getText();
         String newPassword = jTextNewPassword.getText();
         String passwordConfirm = jTextConfirmPassword.getText();
-        String currentPasswordConfirm = "test";
+        String currentPasswordConfirm = "default";
+                
+        try {
+            Scanner input20 = new Scanner(new File("userLogin.txt"));
+            Scanner input0 = new Scanner(new File("UHD_DB.txt"));
+            String employeeID = input20.nextLine();
+
+            while (input0.hasNextLine()) {
+                String t = input0.nextLine();
+                String[] DB_array = t.split(";");
+
+                if (employeeID.equals(DB_array[0])) {
+                    currentPasswordConfirm = DB_array[2];
+                    break;
+                }
+            }
+
+            input20.close();
+            input0.close();
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "University DB Not Found", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
         
         if (newPassword.equals(passwordConfirm) && newPassword.length() >= 8 && currentPassword.equals(currentPasswordConfirm)) {
-            //password checks
-            //changes old password to new password
+            
+            
+            
+            
+            
+            
+            try {
+                FileWriter input2 = new FileWriter("pollHistoryTemp.txt", false);
+                BufferedWriter input3 = new BufferedWriter(input2);
+                Scanner input = new Scanner(new File("userLogin.txt"));
+                Scanner input4 = new Scanner(new File("UHD_DB.txt"));
+                String userName = input.nextLine();
+                int g = 0;
+
+                while (input4.hasNextLine()) {
+                    String t = input4.nextLine();
+                    String[] DB_array = t.split(";");
+
+                    //System.out.println(DB_array[0]);
+                    if (userName.equals(DB_array[0])) {
+                        //here is where I print all the stuffs
+                        input3.write(DB_array[0] + ";" + DB_array[1] + ";" + newPassword + ";" + DB_array[3] + ";");
+                        input3.newLine();
+                    } else {
+                        input3.write(t);
+                        input3.newLine();
+                    }
+                }
+                input3.flush();
+                input4.close();
+                input3.close();
+                input2.close();
+                input.close();
+
+                FileWriter input5 = new FileWriter("UHD_DB.txt", false);
+                BufferedWriter input6 = new BufferedWriter(input5);
+                Scanner input7 = new Scanner(new File("pollHistoryTemp.txt"));
+                while (input7.hasNextLine()) {
+                    String t = input7.nextLine();
+                    input6.write(t);
+                    input6.newLine();
+
+                }
+                input6.flush();
+                input7.close();
+                input6.close();
+                input5.close();
+                
+                StudentPortal Info = new StudentPortal();
+                dispose();
+                Info.setVisible(true);
+            } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(null,
+                        "University DB Not Found", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                Logger.getLogger(CreateGroup.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+            
         }
         else if (newPassword.length() < 8){
             //error message
             JOptionPane.showMessageDialog(null, "Invalid Login Details: Passwords Must Be At Least Eight Characters Long.", "Login Error", JOptionPane.ERROR_MESSAGE);
-            jTextNewPassword.setText(null);
-            jTextConfirmPassword.setText(null);
+//            jTextNewPassword.setText(null);
+//            jTextConfirmPassword.setText(null);
         }
         else if (!newPassword.equals(passwordConfirm)) {            
             JOptionPane.showMessageDialog(null, "Invalid Login Details: Confirm Password Does Not Match.", "Login Error", JOptionPane.ERROR_MESSAGE);
-            jTextNewPassword.setText(null);
-            jTextConfirmPassword.setText(null);
+
         }
-        else if (currentPassword.equals(currentPasswordConfirm)) {           
+        else if (!currentPassword.equals(currentPasswordConfirm)) {           
             JOptionPane.showMessageDialog(null, "Invalid Login Details: Current Password Does Not Match.", "Login Error", JOptionPane.ERROR_MESSAGE);
-            jTextNewPassword.setText(null);
-            jTextConfirmPassword.setText(null);            
+           
         } 
         else {           
             JOptionPane.showMessageDialog(null, "Invalid Login Details: An Unknown Error Occured.", "Login Error", JOptionPane.ERROR_MESSAGE);
-            jTextNewPassword.setText(null);
-            jTextConfirmPassword.setText(null);
+ 
             
         }
     }//GEN-LAST:event_jButtonPasswordSubmitActionPerformed
@@ -357,14 +456,12 @@ public class UserProfile extends javax.swing.JFrame {
     private javax.swing.JButton jButtonHomePage;
     private javax.swing.JButton jButtonPasswordSubmit;
     private javax.swing.JButton jButtonSignOut;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabelTotalPolls;
-    private javax.swing.JLabel jLabelUserName;
+    private javax.swing.JLabel jLabelEmployeeID;
+    private javax.swing.JLabel jLabelTitle;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelPasswordReset;
     private javax.swing.JTextField jTextConfirmPassword;

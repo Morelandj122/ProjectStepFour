@@ -81,6 +81,7 @@ public class CurrentGroups extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         jButtonHomePage.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -107,7 +108,7 @@ public class CurrentGroups extends javax.swing.JFrame {
         );
         jPanelGroupsLayout.setVerticalGroup(
             jPanelGroupsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
+            .addGap(0, 588, Short.MAX_VALUE)
         );
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N

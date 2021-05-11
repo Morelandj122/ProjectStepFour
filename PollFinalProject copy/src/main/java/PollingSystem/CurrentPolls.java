@@ -78,6 +78,7 @@ public class CurrentPolls extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         jButtonHomePage.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -126,7 +127,7 @@ public class CurrentPolls extends javax.swing.JFrame {
                         .addComponent(jButtonSignOut)
                         .addComponent(jButtonHomePage))
                     .addComponent(jButton1))
-                .addGap(0, 623, Short.MAX_VALUE))
+                .addGap(0, 617, Short.MAX_VALUE))
         );
 
         jLabelTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
